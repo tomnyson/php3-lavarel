@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ShopController;
+use App\Http\Controllers\BlogController;
 
 Route::get('/', function () {
     return view('home');
@@ -16,3 +17,4 @@ Route::get('/product/search', [ProductController::class, 'productSearch']);
 Route::get('/product/{id}', [ProductController::class, 'productdetail']);
 Route::get('/shop', [ShopController::class, 'shopview']);
 Route::get('/shop/{id}', [ShopController::class, 'shopchitiet']);
+Route::resource('/api/blogs', BlogController::class);
