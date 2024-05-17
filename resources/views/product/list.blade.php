@@ -12,21 +12,23 @@
             <tr>
                 <th scope="col">id</th>
                 <th scope="col">Name</th>
+                <th scope="col">Image</th>
                 <th scope="col">Action</th>
             </tr>
         </thead>
         <tbody>
-            @foreach ($categories as $cat)
+            @foreach ($products as $prod)
             <tr>
-                <th scope="row">{{$cat->id}}</th>
-                <td>{{$cat->name}}</td>
+                <th scope="row">{{$prod->id}}</th>
+                <td>{{$prod->name}}</td>
+                <td><img src="{{$prod->image}}" class="img-thumbnail" width="100px" /></td>
                 <td>
-                    <form method="post" action="{{route('categories.destroy',[$cat->id])}}">
+                    <form method="post" action="{{route('categories.destroy',[$prod->id])}}">
                         @csrf
                         @method('DELETE')
                         <button type="submit" class="btn btn-danger">delele</button>
                     </form>
-                    <a href="{{route('categories.edit',[$cat->id])}}" class="btn btn-info">Edit</a>
+                    <a href="{{route('categories.edit',[$prod->id])}}" class="btn btn-info">Edit</a>
                 </td>
             </tr>
         </tbody>

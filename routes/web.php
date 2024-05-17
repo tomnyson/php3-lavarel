@@ -15,6 +15,7 @@ Route::get('/users', [HomeController::class, 'getUsers']);
 Route::get('/product', [ProductController::class, 'productview']);
 Route::get('/product/search', [ProductController::class, 'productSearch']);
 Route::get('/product/{id}', [ProductController::class, 'productdetail']);
-Route::get('/shop', [ShopController::class, 'shopview']);
+Route::get('/shop', [ShopController::class, 'index']);
 Route::get('/shop/{id}', [ShopController::class, 'shopchitiet']);
 Route::resource('categories', CategoryController::class);
+Route::resource('products', ProductController::class);
