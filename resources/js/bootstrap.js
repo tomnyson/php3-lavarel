@@ -1,3 +1,14 @@
+// resources/js/bootstrap.js
+
+import 'bootstrap';
+import 'popper.js';
+import $ from 'jquery';
+window.$ = $;
+window.jQuery = $;
+
+import _ from 'lodash';
+window._ = _;
+
 import axios from 'axios';
 window.axios = axios;
 
