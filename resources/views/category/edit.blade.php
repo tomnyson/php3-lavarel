@@ -13,12 +13,13 @@
     <br />
     @endforeach
     <a href="{{route('categories.index')}}" class="btn btn-info">List</a>
-    <h3>Thêm Danh mục</h3>
-    <form method="post" action="{{url('categories')}}">
+    <h3>Sửa Danh mục</h3>
+    <form method="post" action="{{route('categories.update', $category->id)}}">
         @csrf
-        <input class="form-control" placeholder="enter name" type="text" name="name">
-        <input class="form-control mt-3" placeholder="enter description" type="textarea" name="description">
-        <input type="submit" class="btn btn-primary mt-3" value="create">
+        @method('PUT')
+        <input class="form-control" placeholder="enter name" type="text" name="name" value="{{$category->name}}">
+        <input class="form-control mt-3" placeholder="enter name" type="text" name="description" value="{{$category->description}}">
+        <input type="submit" class="btn btn-primary mt-3" value="edit">
     </form>
 </div>
 

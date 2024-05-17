@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Category;
+use Illuminate\Support\Facades\DB;
 
 class CategoryController extends Controller
 {
@@ -12,11 +13,14 @@ class CategoryController extends Controller
      */
     public function index()
     {
-        echo "index call ";
-        $products = DB::table('products')->select('id', 'name', 'image', 'price');
-        $results  = ($products->get());
-        return view('shop', ['products' => $results]);
+        echo "index call create ";
+        // $categories = DB::table('category')->select('id', 'name', 'description');
+        $categories = Category::all();
+        // $results  = ($categories->get());
+        return view('category.list', ['categories' => $categories]);
     }
+
+
 
     /**
      * Show the form for creating a new resource.
@@ -24,10 +28,9 @@ class CategoryController extends Controller
     public function create()
     {
         echo "index call create ";
-        // $products = DB::table('products')->select('id', 'name', 'image', 'price');
-        // $results  = ($products->get());
-        // return view('shop', ['products' => $results]);
-        return view('category.create');
+        $categories = DB::table('category')->select('id', 'name');
+        $results  = ($categories->get());
+        return view('category.create', ['category' => $results]);
     }
 
     /**
@@ -40,8 +43,9 @@ class CategoryController extends Controller
             'description' => 'required',
         ]);
         $blog = Category::create($request->all());
-        return view('category.create');
+        return redirect()->route('categories.index')->with('success', 'Thêm thành công');
     }
+
 
     /**
      * Display the specified resource.
@@ -56,7 +60,10 @@ class CategoryController extends Controller
      */
     public function edit(string $id)
     {
-        echo "index edit call ";
+        echo "index call ";
+        $categories = Category::where('id', $id);
+        $results  = ($categories->get());
+        return view('category.edit', ['category' => $results[0]]);
     }
 
     /**
@@ -64,7 +71,18 @@ class CategoryController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        echo "index edit call ";
+        $validated =  $request->validate([
+            'name' => 'required|max:255',
+            'description' => 'required',
+        ]);
+        var_dump($request->all());
+
+        $updated = [
+            'name' => $request->get('name'),
+            'description' => $request->get('description')
+        ];
+        $blog = Category::where('id', $id)->update($updated);
+        return redirect()->route('categories.index')->with('success', 'Cập nhật thành công');
     }
 
     /**
@@ -72,6 +90,7 @@ class CategoryController extends Controller
      */
     public function destroy(string $id)
     {
-        echo "index destroy call ";
+        DB::table('category')->where('id', $id)->delete();
+        return redirect()->route('categories.index')->with('success', 'delete successfully');
     }
 }
