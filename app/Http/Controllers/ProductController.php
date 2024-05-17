@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Models\Product;
+use App\Models\Category;
 
 class ProductController extends Controller
 {
@@ -41,9 +42,9 @@ class ProductController extends Controller
     {
         echo "index call create ";
         // $categories = DB::table('category')->select('id', 'name', 'description');
-        $products = Product::all();
+        $products = Product::paginate(12);
         // $results  = ($categories->get());
-        return view('product.list', ['products' => $products]);
+        return view('product.list',  ['products' => $products]);
     }
 
 
@@ -116,7 +117,7 @@ class ProductController extends Controller
      */
     public function destroy(string $id)
     {
-        DB::table('category')->where('id', $id)->delete();
-        return redirect()->route('categories.index')->with('success', 'delete successfully');
+        DB::table('products')->where('id', $id)->delete();
+        return redirect()->route('products.index')->with('success', 'delete successfully');
     }
 }
