@@ -55,9 +55,8 @@ class ProductController extends Controller
     public function create()
     {
         echo "index call create ";
-        $categories = DB::table('category')->select('id', 'name');
-        $results  = ($categories->get());
-        return view('product.create', ['category' => $results]);
+        $categories = Category::all();
+        return view('product.create', ['categories' => $categories]);
     }
 
     /**
@@ -65,14 +64,36 @@ class ProductController extends Controller
      */
     public function store(Request $request)
     {
-        $validated =  $request->validate([
+        $validated = $request->validate([
             'name' => 'required|max:255',
             'description' => 'required',
+            'price' => 'required|integer|min:0',
+            'categories' => 'nullable|array|between:1,3|exists:category',
+            'image' => [
+                'required',
+                'image',
+                'mimes:jpeg,png,jpg,gif',
+                'max:2048',
+            ],
         ]);
-        $blog = Product::create($request->all());
-        return redirect()->route('product.index')->with('success', 'Thêm thành công');
-    }
 
+        if ($request->hasFile('image')) {
+            $imageName = time() . '.' . $request->image->extension();
+            $request->image->move(public_path('images'), $imageName);
+        } else {
+            return back()->withErrors(['image' => 'Image upload failed. Please try again.']);
+        }
+
+        $product = new Product();
+        $product->name = $request->input('name');
+        $product->description = $request->input('description');
+        $product->price = $request->input('price');
+        $product->category_id = (int)$request->input('category_id');
+        $product->image = $imageName;
+        $product->save();
+
+        return back()->with('success', 'You have successfully uploaded the image.');
+    }
 
     /**
      * Display the specified resource.
