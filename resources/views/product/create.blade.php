@@ -12,7 +12,7 @@
     </div>
     <br />
     @endforeach
-    <a href="{{route('categories.index')}}" class="btn btn-info">List</a>
+    <a href="{{route('products.index')}}" class="btn btn-info">List</a>
     <h3>Thêm Sản phẩm</h3>
     <form method="post" action="{{url('products')}}" enctype="multipart/form-data">
         @csrf

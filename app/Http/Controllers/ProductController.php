@@ -42,8 +42,9 @@ class ProductController extends Controller
     {
         echo "index call create ";
         // $categories = DB::table('category')->select('id', 'name', 'description');
-        $products = Product::paginate(12);
+        $products = Product::orderBy('id', 'DESC')->paginate(12);
         // $results  = ($categories->get());
+        // var_dump($products);
         return view('product.list',  ['products' => $products]);
     }
 
@@ -68,7 +69,7 @@ class ProductController extends Controller
             'name' => 'required|max:255',
             'description' => 'required',
             'price' => 'required|integer|min:0',
-            'categories' => 'nullable|array|between:1,3|exists:category',
+            'categories' => 'nullable|array|exists:category',
             'image' => [
                 'required',
                 'image',

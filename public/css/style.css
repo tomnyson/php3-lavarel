@@ -3849,3 +3849,11 @@ ol {
 		height: 250px;
 	}
 }
+
+.product-pagination svg {
+	width: 20px;
+
+}
+.product-pagination {
+	margin-bottom: 20px;
+}
