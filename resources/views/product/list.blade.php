@@ -30,10 +30,18 @@
                 <td>{{$prod->price}}</td>
                 <!-- <td><img onerror="this.src='https://placehold.co/600x400'" src="{{$prod->image}}" class="img-thumbnail" width="100px" /></td> -->
                 <td>
-                    @if($prod->image !="")
+                    <?php
+                    $imageUrl = $prod->image;
+                    $imageExists = false;
+                    if (filter_var($imageUrl, FILTER_VALIDATE_URL)) {
+                        $headers = @get_headers($imageUrl);
+                        $imageExists = $headers && strpos($headers[0], '200') !== false;
+                    }
+                    ?>
+                    @if($imageExists)
                     <img src=" {{$prod->image}}" class="img-thumbnail" width="100px" />
                     @else
-                    <img src=" {{asset($prod->image)}}" class="img-thumbnail" width="100px" />
+                    <img src=" {{asset('/images/'.$prod->image)}}" class="img-thumbnail" width="100px" />
                     @endif
                 </td>
                 <td>
