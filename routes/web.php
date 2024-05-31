@@ -9,6 +9,7 @@ use App\Http\Controllers\HomeController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Mail;
 use App\Http\Middleware\CheckPermission;
+use App\Http\Controllers\CheckoutController;
 
 Route::get('/', [ShopController::class, 'index']);
 
@@ -25,6 +26,8 @@ Route::resource('products', ProductController::class);
 Route::resource('products', ProductController::class);
 Route::resource('categories', CategoryController::class);
 Route::resource('cart', CartController::class);
+Route::get('checkout', [CheckoutController::class, 'index'])->middleware("auth");
+
 Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');

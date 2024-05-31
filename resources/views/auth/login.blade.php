@@ -2,10 +2,7 @@
 @section('content')
 <div class="container">
     <h2>Login Form</h2>
-    <?php
-    var_dump($errors)
-    ?>
-    < method="post" action="{{ route('login') }}">
+    <form method="post" action="{{ route('login') }}">
         @csrf
         <input type="email" class="form-control" name="email" placeholder="email" required />
         @if ($errors->has('email'))
@@ -20,7 +17,7 @@
         <a href="{{route('register')}}">Register new Account</a>
         </br>
         <a href="{{route('password.request')}}">Forgot password</a>
-        </form>
-</div>
+    </form>
+    <div>
 
-@endsection
+        @endsection

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Gloudemans\Shoppingcart\Cart as ShoppingcartCart;
 use Illuminate\Http\Request;
 use Gloudemans\Shoppingcart\Facades\Cart;
 
@@ -63,8 +64,10 @@ class CartController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(string $rowId)
     {
-        //
+        // var_dump(Cart::content());
+        Cart::remove($rowId);
+        return redirect('cart',)->with('success', 'Successfully deleted');
     }
 }

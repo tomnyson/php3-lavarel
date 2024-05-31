@@ -5,6 +5,11 @@
         <div class="container">
             <div class="row">
                 <div class="col-lg-8">
+                    @if (session('success'))
+                    <div class="alert alert-success">
+                        {{session('success')}}
+                    </div>
+                    @endif
                     <div class="shopping__cart__table">
                         <table>
                             <thead>
@@ -36,10 +41,12 @@
                                     </td>
                                     <td class="cart__price">{{$cart->total}}</td>
                                     <td class="cart__close">
+                                        <form action="{{route('cart.destroy', $cart->rowId)}}" method="post">
+                                            @csrf
+                                            @method ('delete')
+                                            <button class="fa fa-close" type="submit"></button>
+                                        </form>
 
-                                        <i class="fa fa-close">
-
-                                        </i>
                                     </td>
                                 </tr>
                                 @endforeach
@@ -74,7 +81,7 @@
                             <li>Subtotal <span>$ {{Cart::subtotal()}}</span></li>
                             <li>Total <span>$ {{Cart::total()}}</span></li>
                         </ul>
-                        <a href="#" class="primary-btn">Proceed to checkout</a>
+                        <a href="{{url('checkout')}}" class="primary-btn">Proceed to checkout</a>
                     </div>
                 </div>
             </div>
