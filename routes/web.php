@@ -3,10 +3,12 @@
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\CartController;
 use App\Http\Controllers\ShopController;
 use App\Http\Controllers\HomeController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Mail;
+use App\Http\Middleware\CheckPermission;
 
 Route::get('/', [ShopController::class, 'index']);
 
@@ -22,6 +24,7 @@ Route::resource('products', ProductController::class);
 
 Route::resource('products', ProductController::class);
 Route::resource('categories', CategoryController::class);
+Route::resource('cart', CartController::class);
 Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
@@ -36,7 +39,6 @@ Route::get('/test-email', function () {
         $message->to('tabletkindfire@gmail.com')
             ->subject('Test Email');
     });
-
     return 'Email sent successfully';
-});
+})->middleware(CheckPermission::class);
 require __DIR__ . '/auth.php';

@@ -110,14 +110,24 @@
                     <div class="product__item__pic set-bg" data-setbg="{{$product->image}}">
                         <span class="label">New</span>
                         <ul class="product__hover">
-                            <li><a href="#"><img src="img/icon/heart.png" alt=""></a></li>
+                            <li><a href="shop/{{ $product->id }}"><img src="img/icon/heart.png" alt=""></a>
+                            </li>
                             <li><a href="#"><img src="img/icon/compare.png" alt=""> <span>Compare</span></a></li>
                             <li><a href="#"><img src="img/icon/search.png" alt=""></a></li>
                         </ul>
                     </div>
                     <div class="product__item__text">
                         <h6>{{$product->name}}</h6>
-                        <a href="#" class="add-cart">+ Add To Cart</a>
+                        <form method="POST" action="{{route('cart.index')}}">
+                            @csrf
+                            <input type="hidden" name="name" value="{{ $product->name}}" />
+                            <input type="hidden" name="id" value="{{ $product->id}}" />
+                            <input type="hidden" name="price" value="{{ $product->price}}" />
+                            <button type="submit">Add To Carts
+                            </button>
+
+                        </form>
+
                         <div class="rating">
                             <i class="fa fa-star-o"></i>
                             <i class="fa fa-star-o"></i>

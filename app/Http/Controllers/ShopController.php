@@ -15,8 +15,10 @@ class ShopController extends Controller
     }
     public function shopchitiet(Request $request, $id)
     {
-        // $products = DB::table('products')->select('id', 'name', 'image', 'price');
-        // $results  = ($products->get());
-        return view('shopchitiet');
+        $product = Product::where('id', $id);
+        return view('shopchitiet', ['products' => $product]);
+    }
+    public function addcart(Request $request)
+    {
     }
 }
