@@ -36,7 +36,8 @@
                             </div>
                             <div class="checkout__input">
                                 <p>Address<span>*</span></p>
-                                <input type="text" name="address" placeholder="Street Address" class="checkout__input__add">
+                                <input type="text" name="address" placeholder="Street Address"
+                                    class="checkout__input__add">
 
                             </div>
                             <!-- <div class="checkout__input">
@@ -87,7 +88,8 @@
                             </div> -->
                             <div class="checkout__input">
                                 <p>Order notes<span>*</span></p>
-                                <input type="text" name="note" placeholder="Notes about your order, e.g. special notes for delivery.">
+                                <input type="text" name="note"
+                                    placeholder="Notes about your order, e.g. special notes for delivery.">
                             </div>
                         </div>
                         <div class="col-lg-4 col-md-6">
@@ -115,15 +117,15 @@
                                     ut labore et dolore magna aliqua.</p>
                                 <div class="checkout__input__checkbox">
                                     <label for="payment">
-                                        Check Payment
-                                        <input type="checkbox" id="payment">
+                                        COD
+                                        <input type="radio" name="payment" value="cash" id="payment">
                                         <span class="checkmark"></span>
                                     </label>
                                 </div>
                                 <div class="checkout__input__checkbox">
                                     <label for="paypal">
-                                        Paypal
-                                        <input type="checkbox" id="paypal">
+                                        VNPAY
+                                        <input name="payment" value="vnpay" type="radio" id="paypal">
                                         <span class="checkmark"></span>
                                     </label>
                                 </div>
