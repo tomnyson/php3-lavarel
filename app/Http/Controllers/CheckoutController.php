@@ -9,6 +9,8 @@ use Gloudemans\Shoppingcart\Facades\Cart;
 use App\Models\Order;
 use App\Models\OrderItem;
 use Illuminate\Support\Facades\Auth;
+use App\Mail\OrderShipped;
+use Illuminate\Support\Facades\Mail;
 
 class CheckoutController extends Controller
 {
@@ -51,6 +53,8 @@ class CheckoutController extends Controller
             ));
         }
         Cart::destroy();
-        return view('checkout.index', compact('user', 'carts'));
+        Mail::to($request->user())->send(new OrderShipped($order));
+
+        return view('checkout.checkoutTK');
     }
 }

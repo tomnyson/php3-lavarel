@@ -28,7 +28,7 @@ Route::resource('categories', CategoryController::class);
 Route::resource('cart', CartController::class);
 Route::get('checkout', [CheckoutController::class, 'index'])->middleware("auth");
 Route::post('checkout', [CheckoutController::class, 'checkout'])->name("checkoutPost");
-
+Route::get('checkout/success', [CheckoutController::class, 'checkoutTK']);
 Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
