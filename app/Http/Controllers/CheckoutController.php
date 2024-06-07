@@ -29,7 +29,6 @@ class CheckoutController extends Controller
     public function vnpayReturn(Request $request)
     {
         $vnp_SecureHash = $request->vnp_SecureHash;
-        var_dump($request->all());
         $inputData = array();
         foreach ($request->all() as $key => $value) {
             if (substr($key, 0, 4) == "vnp_") {
@@ -50,8 +49,9 @@ class CheckoutController extends Controller
         if ($secureHash == $vnp_SecureHash) {
             if ($request->vnp_ResponseCode == '00') {
                 $order = Order::where('id', $request->vnp_TxnRef)->first();
-                $order->update(['status' => 'paid']);
+                $order->update(['status_status' => 'paid']);
                 // Payment success
+                Cart::destroy();
                 return view('checkout.paymentSuccess', compact('order'));
             } else {
                 // Payment failed
@@ -62,20 +62,19 @@ class CheckoutController extends Controller
             return view('payment.invalid');
         }
     }
-    public function createPayment(Request $request)
+    public function createPayment(Request $request, Order $order)
     {
         $vnp_TmnCode = env('VNPAY_TMN_CODE');
         $vnp_HashSecret = env('VNPAY_HASH_SECRET');
         $vnp_Url = env('VNPAY_URL');
         $vnp_Returnurl = env('VNPAY_RETURN_URL');
 
-        $vnp_TxnRef = time(); // Mã đơn hàng
+        $vnp_TxnRef = $order->id; // Mã đơn hàng
         $vnp_OrderInfo = 'Thanh toan don hang test';
         $vnp_OrderType = 'billpayment';
-        $vnp_Amount = $this->cartTotalAsNumber(); // Số tiền thanh toán
+        $vnp_Amount = $this->cartTotalAsNumber() * 100; // Số tiền thanh toán
         $vnp_Locale = 'vn';
         $vnp_IpAddr = $request->ip();
-
         $inputData = array(
             "vnp_Version" => "2.1.0",
             "vnp_TmnCode" => $vnp_TmnCode,
@@ -144,12 +143,13 @@ class CheckoutController extends Controller
                 'price' => $item->price,
             ));
         }
-        Cart::destroy();
+
         Mail::to($request->user())->send(new OrderShipped($order));
         if ($request->payment == "vnpay") {
             echo "call here to checkout your";
-            return $this->createPayment($request);
+            return $this->createPayment($request, $order);
         } else {
+            Cart::destroy();
             return view('checkout.checkoutTK');
         }
     }

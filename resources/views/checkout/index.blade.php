@@ -36,8 +36,7 @@
                             </div>
                             <div class="checkout__input">
                                 <p>Address<span>*</span></p>
-                                <input type="text" name="address" placeholder="Street Address"
-                                    class="checkout__input__add">
+                                <input type="text" name="address" placeholder="Street Address" class="checkout__input__add">
 
                             </div>
                             <!-- <div class="checkout__input">
@@ -88,8 +87,7 @@
                             </div> -->
                             <div class="checkout__input">
                                 <p>Order notes<span>*</span></p>
-                                <input type="text" name="note"
-                                    placeholder="Notes about your order, e.g. special notes for delivery.">
+                                <input type="text" name="note" placeholder="Notes about your order, e.g. special notes for delivery.">
                             </div>
                         </div>
                         <div class="col-lg-4 col-md-6">
@@ -103,8 +101,8 @@
                                     @endforeach
                                 </ul>
                                 <ul class="checkout__total__all">
-                                    <li>Subtotal <span>$750.99</span></li>
-                                    <li>Total <span>$750.99</span></li>
+                                    <li>Subtotal <span>{{Cart::subtotal()}} VNĐ</span></li>
+                                    <li>Total <span>{{Cart::total()}} VNĐ</span></li>
                                 </ul>
                                 <div class="checkout__input__checkbox">
                                     <label for="acc-or">
